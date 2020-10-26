@@ -1,0 +1,19 @@
+AllCops:
+  NewCops: enable
+  Exclude:
+    - 'Rakefile'
+    - 'spec/spec_helper.rb'
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/*'
+
+Style/WordArray:
+  Exclude:
+    - 'spec/*'
