@@ -19,7 +19,7 @@ RSpec.describe Organization do
   subject { described_class.new(hash) }
 
   it 'has the expected keys' do
-    expect(subject.keys).to eq(%w[_id url external_id name domain_names created_at details shared_tickets tags])
+    expect(described_class.keys).to eq(%w[_id url external_id name domain_names created_at details shared_tickets tags])
   end
 
   it 'has the expected _id' do

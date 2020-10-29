@@ -4,7 +4,7 @@ require_relative '../lib/organization_reader'
 RSpec.describe OrganizationReader do
   let(:organization_file) { File.join(File.dirname(__FILE__), 'fixtures', 'organizations.json') }
 
-  subject { described_class.new.read_organizations(organization_file) }
+  subject { described_class.new.read(organization_file) }
 
   it 'returns a number of organizations' do
     expect(subject.count).to eq(25)

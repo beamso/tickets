@@ -4,7 +4,7 @@ require_relative '../lib/ticket_reader'
 RSpec.describe TicketReader do
   let(:ticket_file) { File.join(File.dirname(__FILE__), 'fixtures', 'tickets.json') }
 
-  subject { described_class.new.read_tickets(ticket_file) }
+  subject { described_class.new.read(ticket_file) }
 
   it 'returns a number of tickets' do
     expect(subject.count).to eq(200)

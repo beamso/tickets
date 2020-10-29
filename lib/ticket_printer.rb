@@ -1,7 +1,7 @@
-require_relative 'reader'
 require_relative 'ticket'
+require_relative 'object_printer'
 
-class TicketReader < Reader
+class TicketPrinter < ObjectPrinter
   def initialize
     super(Ticket)
   end

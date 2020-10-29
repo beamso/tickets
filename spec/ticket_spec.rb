@@ -27,7 +27,8 @@ RSpec.describe Ticket do
   subject { described_class.new(hash) }
 
   it 'has the expected keys' do
-    expect(subject.keys).to eq(hash.keys)
+    expect(described_class.keys).to eq(%w[_id url external_id created_at type subject description priority status
+                                          submitter_id assignee_id organization_id tags has_incidents due_at via])
   end
 
   it 'has the expected _id' do

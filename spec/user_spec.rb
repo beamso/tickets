@@ -29,8 +29,9 @@ RSpec.describe User do
   subject { described_class.new(hash) }
 
   it 'has the expected keys' do
-    expect(subject.keys).to eq(%w[_id url external_id name alias created_at active verified shared locale timezone
-                                  last_login_at email phone signature organization_id tags suspended role])
+    expect(described_class.keys).to eq(%w[_id url external_id name alias created_at active verified shared locale
+                                          timezone last_login_at email phone signature organization_id tags suspended
+                                          role])
   end
 
   it 'has the expected _id' do

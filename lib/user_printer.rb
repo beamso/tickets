@@ -1,7 +1,7 @@
 require_relative 'user'
-require_relative 'reader'
+require_relative 'object_printer'
 
-class UserReader < Reader
+class UserPrinter < ObjectPrinter
   def initialize
     super(User)
   end
