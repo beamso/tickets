@@ -31,6 +31,7 @@ RSpec.describe TicketPrinter do
 
     let(:expected_output) do
       <<~ENDOFOUTPUT
+        Ticket:
         _id               50dfc8bc-31de-411e-92bf-a6d6b9dfa490
         url               http://initech.zendesk.com/api/v2/tickets/50dfc8bc-31de-411e-92bf-a6d6b9dfa490.json
         external_id       8bc8bee7-2d98-4b69-b4a9-4f348ff41fa3
@@ -47,6 +48,7 @@ RSpec.describe TicketPrinter do
         has_incidents     true
         due_at            2016-08-03T09:17:37 -10:00
         via               voice
+        
       ENDOFOUTPUT
     end
 

@@ -57,4 +57,54 @@ RSpec.describe Organization do
   it 'has the expected tags' do
     expect(subject.tags).to eq(%w[Fulton West Rodriguez Farley])
   end
+
+  describe '.print' do
+    let(:organization_printer) { instance_double(OrganizationPrinter) }
+
+    before do
+      allow(OrganizationPrinter).to receive(:new).and_return(organization_printer)
+      allow(organization_printer).to receive(:print).and_return('bar')
+    end
+
+    let(:instance) { Organization.new({}) }
+
+    subject { instance.print }
+
+    it 'returns the expected output' do
+      expect(subject).to eq('bar')
+    end
+
+    it 'calls print on the printer' do
+      expect(organization_printer).to receive(:print).with(instance)
+      subject
+    end
+  end
+
+  describe '.print_keys' do
+    let(:organization_printer) { instance_double(OrganizationPrinter) }
+
+    before do
+      allow(OrganizationPrinter).to receive(:new).and_return(organization_printer)
+      allow(organization_printer).to receive(:print_keys).and_return('bar')
+    end
+
+    subject { described_class.print_keys }
+
+    it 'returns the expected output' do
+      expect(subject).to eq('bar')
+    end
+
+    it 'calls print on the printer' do
+      expect(organization_printer).to receive(:print_keys)
+      subject
+    end
+  end
+
+  describe '.print_short' do
+    subject { described_class.new(hash).print_short }
+
+    it 'returns the expected output' do
+      expect(subject).to eq('Organization  Enthaze')
+    end
+  end
 end

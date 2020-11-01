@@ -95,4 +95,54 @@ RSpec.describe Ticket do
   it 'has the expected via' do
     expect(subject.via).to eq('web')
   end
+
+  describe '.print' do
+    let(:ticket_printer) { instance_double(TicketPrinter) }
+
+    before do
+      allow(TicketPrinter).to receive(:new).and_return(ticket_printer)
+      allow(ticket_printer).to receive(:print).and_return('bar')
+    end
+
+    let(:instance) { Ticket.new({}) }
+
+    subject { instance.print }
+
+    it 'returns the expected output' do
+      expect(subject).to eq('bar')
+    end
+
+    it 'calls print on the printer' do
+      expect(ticket_printer).to receive(:print).with(instance)
+      subject
+    end
+  end
+
+  describe '.print_keys' do
+    let(:ticket_printer) { instance_double(TicketPrinter) }
+
+    before do
+      allow(TicketPrinter).to receive(:new).and_return(ticket_printer)
+      allow(ticket_printer).to receive(:print_keys).and_return('bar')
+    end
+
+    subject { described_class.print_keys }
+
+    it 'returns the expected output' do
+      expect(subject).to eq('bar')
+    end
+
+    it 'calls print on the printer' do
+      expect(ticket_printer).to receive(:print_keys)
+      subject
+    end
+  end
+
+  describe '.print_short' do
+    subject { described_class.new(hash).print_short }
+
+    it 'returns the expected output' do
+      expect(subject).to eq('Ticket  A Catastrophe in Korea (North)')
+    end
+  end
 end

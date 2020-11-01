@@ -25,4 +25,16 @@ class Ticket
     %w[_id url external_id created_at type subject description priority status submitter_id assignee_id
        organization_id tags has_incidents due_at via]
   end
+
+  def print
+    TicketPrinter.new.print(self)
+  end
+
+  def self.print_keys
+    TicketPrinter.new.print_keys
+  end
+
+  def print_short
+    "Ticket  #{subject}"
+  end
 end

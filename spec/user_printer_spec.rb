@@ -34,6 +34,7 @@ RSpec.describe UserPrinter do
 
     let(:expected_output) do
       <<~ENDOFOUTPUT
+        User:
         _id               75
         url               http://initech.zendesk.com/api/v2/users/75.json
         external_id       0db0c1da-8901-4dc3-a469-fe4b500d0fca
@@ -53,6 +54,7 @@ RSpec.describe UserPrinter do
         tags              ["Veguita", "Navarre", "Elizaville", "Beaulieu"]
         suspended         true
         role              agent
+        
       ENDOFOUTPUT
     end
 

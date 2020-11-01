@@ -109,4 +109,54 @@ RSpec.describe User do
   it 'has the expected role' do
     expect(subject.role).to eq('admin')
   end
+
+  describe '.print' do
+    let(:user_printer) { instance_double(UserPrinter) }
+
+    before do
+      allow(UserPrinter).to receive(:new).and_return(user_printer)
+      allow(user_printer).to receive(:print).and_return('bar')
+    end
+
+    let(:instance) { User.new({}) }
+
+    subject { instance.print }
+
+    it 'returns the expected output' do
+      expect(subject).to eq('bar')
+    end
+
+    it 'calls print on the printer' do
+      expect(user_printer).to receive(:print).with(instance)
+      subject
+    end
+  end
+
+  describe '.print_keys' do
+    let(:user_printer) { instance_double(UserPrinter) }
+
+    before do
+      allow(UserPrinter).to receive(:new).and_return(user_printer)
+      allow(user_printer).to receive(:print_keys).and_return('bar')
+    end
+
+    subject { described_class.print_keys }
+
+    it 'returns the expected output' do
+      expect(subject).to eq('bar')
+    end
+
+    it 'calls print on the printer' do
+      expect(user_printer).to receive(:print_keys)
+      subject
+    end
+  end
+
+  describe '.print_short' do
+    subject { described_class.new(hash).print_short }
+
+    it 'returns the expected output' do
+      expect(subject).to eq('User  Francisca Rasmussen')
+    end
+  end
 end

@@ -16,4 +16,16 @@ class Organization
   def self.keys
     %w[_id url external_id name domain_names created_at details shared_tickets tags]
   end
+
+  def print
+    OrganizationPrinter.new.print(self)
+  end
+
+  def self.print_keys
+    OrganizationPrinter.new.print_keys
+  end
+
+  def print_short
+    "Organization  #{name}"
+  end
 end

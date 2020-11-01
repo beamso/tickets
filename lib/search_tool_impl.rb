@@ -10,8 +10,6 @@ require_relative 'user_store'
 
 require_relative 'searcher'
 
-require 'byebug'
-
 class SearchToolImpl
   def initialize
     @organization_store = OrganizationStore.new(File.join(File.dirname(__FILE__), '..', 'organizations.json'))
@@ -27,17 +25,46 @@ class SearchToolImpl
   private
 
   def search(object, key, value)
-    searcher = Searcher.new(store(object))
+    object_store = store(object)
+    searcher = Searcher.new(object_store)
     items = searcher.search(key, value)
-    printer = printer_class(object).new
     puts "Search results for object #{object}, key #{key}, value #{value}"
-    items.each { |item| puts printer.print(item) }
+    items.each do |item|
+      puts item.print
+      related_items(object_store, item)
+    end
+  end
+
+  def related_items(object_store, item)
+    other_stores = other_stores(object_store)
+    other_stores.each do |store|
+      print_related_items_by_store(store, item)
+    end
+  end
+
+  def print_related_items_by_store(store, item)
+    related_items = related_items_by_store(store, item)
+    related_items.each do |related_item|
+      puts related_item.print_short
+    end
+  end
+
+  def related_items_by_store(store, item)
+    if item.is_a?(Ticket) # rubocop:disable Style/CaseLikeIf
+      store.related_to_ticket(item)
+    elsif item.is_a?(User)
+      store.related_to_user(item)
+    elsif item.is_a?(Organization)
+      store.related_to_organization(item)
+    else
+      []
+    end
   end
 
   def keys(object)
-    printer = printer_class(object)
+    object_class = object_class(object)
     puts "Keys for #{object.capitalize} are:"
-    puts printer.new.print_keys
+    puts object_class.print_keys
   end
 
   def store(object)
@@ -51,14 +78,20 @@ class SearchToolImpl
     end
   end
 
-  def printer_class(object)
-    case object
+  def object_class(object_name)
+    case object_name
     when 'users'
-      UserPrinter
+      User
     when 'tickets'
-      TicketPrinter
+      Ticket
     when 'organizations'
-      OrganizationPrinter
+      Organization
     end
+  end
+
+  def other_stores(store)
+    store_array = [@organization_store, @ticket_store, @user_store]
+    store_array.delete(store)
+    store_array
   end
 end

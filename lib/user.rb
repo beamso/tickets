@@ -28,4 +28,16 @@ class User
     %w[_id url external_id name alias created_at active verified shared locale timezone last_login_at email phone
        signature organization_id tags suspended role]
   end
+
+  def print
+    UserPrinter.new.print(self)
+  end
+
+  def self.print_keys
+    UserPrinter.new.print_keys
+  end
+
+  def print_short
+    "User  #{name}"
+  end
 end

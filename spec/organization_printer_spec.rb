@@ -26,6 +26,7 @@ RSpec.describe OrganizationPrinter do
 
     let(:expected_output) do
       <<~ENDOFOUTPUT
+        Organization:
         _id              125
         url              http://initech.zendesk.com/api/v2/organizations/125.json
         external_id      42a1a845-70cf-40ed-a762-acb27fd606cc
@@ -35,6 +36,7 @@ RSpec.describe OrganizationPrinter do
         details          MegaCorp
         shared_tickets   false
         tags             ["Vance", "Ray", "Jacobs", "Frank"]
+        
       ENDOFOUTPUT
     end
 
