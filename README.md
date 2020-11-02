@@ -1,4 +1,4 @@
-# Zendesk coding challenge
+# Tickets 
 
 ## installing ruby - assuming macOS
 I have developed this using Ruby 2.7.2. It should be possible to edit `.ruby-version`, changing 2.7.2 to whatever ruby version that you have installed on your machine (find it using `ruby --version`) and go from there.
