@@ -64,6 +64,15 @@ RSpec.describe Searcher do
         expect { subject }.to raise_error(/No key/)
       end
     end
+
+    context 'value nil' do
+      let(:key) { 'verified' }
+      let(:value) { '' }
+
+      it 'returns the expected number of users' do
+        expect(subject.count).to eq(2)
+      end
+    end
   end
 
   context 'an organization store' do

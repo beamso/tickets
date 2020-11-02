@@ -12,9 +12,10 @@ require_relative 'searcher'
 
 class SearchToolImpl
   def initialize
-    @organization_store = OrganizationStore.new(File.join(File.dirname(__FILE__), '..', 'organizations.json'))
-    @ticket_store = TicketStore.new(File.join(File.dirname(__FILE__), '..', 'tickets.json'))
-    @user_store = UserStore.new(File.join(File.dirname(__FILE__), '..', 'users.json'))
+    current_directory = File.dirname(__FILE__)
+    @organization_store = OrganizationStore.new(File.join(current_directory, '..', 'organizations.json'))
+    @ticket_store = TicketStore.new(File.join(current_directory, '..', 'tickets.json'))
+    @user_store = UserStore.new(File.join(current_directory, '..', 'users.json'))
   end
 
   def execute(command, object, options)
@@ -28,10 +29,13 @@ class SearchToolImpl
     object_store = store(object)
     searcher = Searcher.new(object_store)
     items = searcher.search(key, value)
-    puts "Search results for object #{object}, key #{key}, value #{value}"
+    puts "Search results for object #{object}, key #{key}, value #{value}:"
+    puts 'No results' if items.empty?
     items.each do |item|
       puts item.print
+      puts 'Related items:'
       related_items(object_store, item)
+      puts ''
     end
   end
 
@@ -67,26 +71,20 @@ class SearchToolImpl
     puts object_class.print_keys
   end
 
-  def store(object)
-    case object
-    when 'users'
-      @user_store
-    when 'tickets'
-      @ticket_store
-    when 'organizations'
-      @organization_store
-    end
+  def store(object_name)
+    {
+      'users' => @user_store,
+      'tickets' => @ticket_store,
+      'organizations' => @organization_store
+    }[object_name]
   end
 
   def object_class(object_name)
-    case object_name
-    when 'users'
-      User
-    when 'tickets'
-      Ticket
-    when 'organizations'
-      Organization
-    end
+    {
+      'users' => User,
+      'tickets' => Ticket,
+      'organizations' => Organization
+    }[object_name]
   end
 
   def other_stores(store)

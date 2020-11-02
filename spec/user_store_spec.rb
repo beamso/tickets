@@ -54,13 +54,20 @@ RSpec.describe UserStore do
 
   describe '.related_to_ticket' do
     let(:ticket) { double(submitter_id: 25, assignee_id: 64) }
+    let(:user_file) { File.join(File.dirname(__FILE__), 'fixtures', 'users.json') }
+
+    subject { described_class.new(user_file).related_to_ticket(ticket) }
+
+    it 'returns 2 ticket' do
+      expect(subject.count).to eq(2)
+    end
   end
 
   describe '.related_to_organization' do
     let(:organization) { double(_id: 114) }
-    let(:ticket_file) { File.join(File.dirname(__FILE__), 'fixtures', 'users.json') }
+    let(:user_file) { File.join(File.dirname(__FILE__), 'fixtures', 'users.json') }
 
-    subject { described_class.new(ticket_file).related_to_organization(organization) }
+    subject { described_class.new(user_file).related_to_organization(organization) }
 
     it 'returns 5 users' do
       expect(subject.count).to eq(5)
